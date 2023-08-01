@@ -1,0 +1,135 @@
+<!doctype html>
+<html ng-app="TodoApp">
+
+<head>
+    <title>ToDo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
+    <script src="todo.js"></script>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="todo.css">
+</head>
+
+<body>
+    <div ng-controller="TodoCtrl" class="toDoContainer">
+        <!-- ADD TASK FIELD START -->
+        <div class="createTask">
+            <form ng-submit="addTodo()" class="form-inline createForm">
+                <!-- ADD SUMMARY START -->
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="todoSummary" size="30" placeholder="New task"
+                        ng-click="endEditMode()">
+                </div>
+                <!-- ADD SUMMARY END -->
+                <!-- ADD PRIORITY START -->
+                <div class="form-group">
+                    <select class="form-control priority" name="priority" ng-model="priority" ng-click="endEditMode()">
+                        <option value="3">High</option>
+                        <option value="2">Medium</option>
+                        <option value="1">Low</option>
+                    </select>
+                </div>
+                <!-- ADD PRIORITY END -->
+                <!-- ADD DUE DATE START -->
+                <div class="form-group">
+                    <input class="form-control datepicker" type="date" name="dueDate" ng-model="dueDate"
+                        placeholder="yyyy-MM-dd" required />
+                </div>
+                <!-- ADD DUE DATE END -->
+                <!-- ADD DESCRIPTION START -->
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="description" size="30" placeholder="Description">
+                </div>
+                <!-- ADD DESCRIPTION END -->
+                <!-- SUBMIT BTN -->
+                <button class="btn btn-default" type="submit">add</button>
+                <!-- SUBMIT BTN -->
+            </form>
+            <span class="tasksLeft">Todo {{remaining()}}/{{todos.length}} [<a href="" ng-click="archive()">clear
+                    done tasks</a>]</span>
+        </div>
+        <!-- ADD TASK FIELD END -->
+        <!-- TODO TABLE START -->
+        <table class="table table-hover">
+            <!-- TODO TABLE HEAD START -->
+            <tr>
+                <th>
+                    <a href="" ng-click="order('summary')">Summary</a>
+                    <span class="sortorder" ng-show="predicate === 'summary'" ng-class="{reverse:reverse}"></span>
+                </th>
+                <th>
+                    <a href="" ng-click="order('priority')">Priority</a>
+                    <span class="sortorder" ng-show="predicate === 'priority'" ng-class="{reverse:reverse}"></span>
+                </th>
+                <th>
+                    <a href="" ng-click="order('dueDate')">Due Date</a>
+                    <span class="sortorder" ng-show="predicate === 'dueDate'" ng-class="{reverse:reverse}"></span>
+                </th>
+                <th>
+                    <a href="" ng-click="order('status')">Status</a>
+                    <span class="sortorder" ng-show="predicate === 'status'" ng-class="{reverse:reverse}"></span>
+                </th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            <!-- TODO TABLE HEAD START -->
+            <!-- TODO LIST START -->
+            <tr ng-repeat="todo in todos | orderBy:predicate:reverse" class="Bg{{todo.priority}}">
+                <!-- SUMMARY START -->
+                <td>
+                    <input type="checkbox" class="todoCheckbox" ng-model="todo.done" ng-change="saveToLocalStorage()">
+                    <span ng-click="edit($event)" class="done-{{todo.done}} todoSummary">{{todo.summary}}</span>
+                </td>
+                <!-- SUMMARY END -->
+                <!-- PRIORITY START -->
+                <td>
+                    <select class="form-control priority" name="priority" ng-model="todo.priority"
+                        ng-change="saveToLocalStorage()" ng-click="endEditMode()">
+                        <option value="3">High</option>
+                        <option value="2">Medium</option>
+                        <option value="1">Low</option>
+                    </select>
+                </td>
+                <!-- PRIORITY END -->
+                <!-- DUE DATE START -->
+                <td>
+                    <input class="form-control datepicker" type="date" name="dueDate" ng-model="todo.dueDate"
+                        placeholder="yyyy-MM-dd" ng-change="saveToLocalStorage()"
+                        required ng-click="endEditMode()" />
+                </td>
+                <!-- DUE DATE END -->
+                <!-- STATUS START -->
+                <td>
+                    <select class="form-control status" name="status" ng-model="todo.status"
+                        ng-change="saveToLocalStorage()" ng-click="endEditMode()">
+                        <option value="todo">To-Do</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </td>
+                <!-- STATUS END -->
+                <!-- DESCRIPTION START -->
+                <td>
+                    <form class="editForm disabled form-inline" ng-submit="editDescriptionSubmit($event)">
+                        <div class="form-group">
+                            <input class="form-control" type="text" size="30" ng-model="todo.description" />
+                        </div>
+                        <button class="btn btn-default" type="submit">save</button>
+                    </form>
+                </td>
+                <!-- DESCRIPTION END -->
+                <!-- REMOVE BTN START -->
+                <td>
+                    <button class="btn btn-danger" ng-click="removeTask(todo)">Delete</button>
+                </td>
+                <!-- REMOVE BTN END -->
+            </tr>
+            <!-- TODO LIST END -->
+        </table>
+        <div class="exportCSV">
+            <button class="btn btn-primary" ng-click="exportToCSV()">Export to CSV</button>
+        </div>
+    </div>
+</body>
+
+</html>

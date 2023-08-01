@@ -1,0 +1,145 @@
+/* app.component.css */
+body {
+    font-size: 18px;
+    font-family: 'Helvetica', sans-serif;
+}
+
+.toDoContainer {
+    max-width: 1024px;
+    margin: 5vw auto;
+}
+
+.createTask {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.createForm {
+    display: flex;
+    align-items: center;
+}
+
+.createForm input[type="text"] {
+    flex: 1;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.createForm button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    margin-left: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.createForm button:hover {
+    background-color: #0056b3;
+}
+
+.todo-item {
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.todo-item label {
+    flex: 1;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.todo-item .removeBtn {
+    display: none;
+}
+
+.todo-item:hover .removeBtn {
+    display: block;
+}
+
+.todo-item .removeBtn {
+    background-color: #ff4444;
+    color: #fff;
+    border: none;
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.todo-item .removeBtn:hover {
+    background-color: #cc0000;
+}
+
+.todo-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.todo-item.done-true label {
+    text-decoration: line-through;
+    color: #aaa;
+}
+
+.todo-item.Statustodo {
+    background-color: #fff;
+    color: #333;
+}
+
+.todo-item.Statusinprogress {
+    background-color: #f0ad4e;
+    color: #fff;
+}
+
+.todo-item.Statusdone {
+    background-color: #5cb85c;
+    color: #fff;
+}
+
+.tasksLeft {
+    float: right;
+    display: inline-block;
+    color: #777;
+    font-size: 14px;
+}
+.Bg3 {
+    background-color: #FFCDD2; /* Red for High priority */
+}
+
+.Bg2 {
+    background-color: #FFECB3; /* Yellow for Medium priority */
+}
+
+.Bg1 {
+    background-color: #C8E6C9; /* Green for Low priority */
+}
+.sortorder:after {
+    content: '\25b2';
+}
+
+.sortorder.reverse:after {
+    content: '\25bc';
+}
+
+.historyView {
+    margin-top: 20px;
+}
+
+.historyView button {
+    margin-bottom: 10px;
+}
